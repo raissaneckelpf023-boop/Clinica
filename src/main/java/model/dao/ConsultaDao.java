@@ -2,12 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package view;
+package model.dao;
+
+import model.Consulta;
 
 /**
  *
  * @author Raissa
  */
-public class TelaCadastroProfissional {
-    
+public class ConsultaDao extends GenericDao<Consulta> {
+    public ConsultaDao() { super(Consulta.class); }
 }
