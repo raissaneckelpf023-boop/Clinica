@@ -8,7 +8,10 @@ package model;
  *
  * @author Raissa
  */
+import java.time.LocalDate;
 import javax.persistence.*;
+import java.time.format.DateTimeFormatter;
+
 
 @Entity
 @Table(name = "paciente")
@@ -16,6 +19,15 @@ public class Paciente extends Pessoa{
      private String telefone;
     private String email;
     private String planoSaude;
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+   private LocalDate dataNascimento;
 
     public String getTelefone() {
         return telefone;
@@ -43,6 +55,6 @@ public class Paciente extends Pessoa{
     
     @Override
     public String toString() {
-        return "Paciente{" + "id=" + id + ", nome='" + nome + '\'' + ", cpf='" + cpf + '\'' + '}';
+        return  nome;
     }
 }

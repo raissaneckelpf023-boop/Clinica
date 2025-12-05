@@ -9,6 +9,7 @@ package model;
  * @author Raissa
  */
 import javax.persistence.*;
+@MappedSuperclass
 public abstract class Pessoa {
     
     @Id

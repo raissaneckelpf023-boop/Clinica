@@ -8,14 +8,48 @@ package view;
  *
  * @author Raissa
  */
+import dao.ConsultaDao;
+import model.Consulta;
+import dao.GenericDao;
+import dao.PacienteDao;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Paciente;
+
 public class VisualizarConsulta extends javax.swing.JFrame {
 
     /**
      * Creates new form VisualizarConsulta
      */
-    public VisualizarConsulta() {
+  public VisualizarConsulta() {
+        initComponents();
+        loadTabela();
+    }
+public class AgendarConsultaJD extends javax.swing.JDialog {
+
+    private Consulta consultaAtual;
+
+    public AgendarConsultaJD() {
         initComponents();
     }
+
+    public AgendarConsultaJD(Consulta consulta) {
+        this(); 
+        this.consultaAtual = consulta;
+        carregarDados();
+    }
+
+    private void carregarDados() {
+        if (consultaAtual != null) {
+            //txtID.setText(String.valueOf(consultaAtual.getId()));
+            //txtPaciente.setText(consultaAtual.getPaciente().getNome());
+            //txtProfissional.setText(consultaAtual.getProfissional().getNome());
+            //txtData.setText(consultaAtual.getData().toString());
+            //txtHora.setText(consultaAtual.getHora().toString());
+        }
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,19 +60,75 @@ public class VisualizarConsulta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Tabela = new javax.swing.JTable();
+        btnEditar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
+
+        jCheckBoxMenuItem2.setSelected(true);
+        jCheckBoxMenuItem2.setText("jCheckBoxMenuItem2");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        Tabela.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "id", "Paciente", "Profissional", "Data", "Hora"
+            }
+        ));
+        jScrollPane1.setViewportView(Tabela);
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(btnEditar)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnRemover)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditar)
+                    .addComponent(btnRemover)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -57,42 +147,79 @@ public class VisualizarConsulta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int linhaSelecionada = Tabela.getSelectedRow();
+    if (linhaSelecionada >= 0) {
+        Object val = Tabela.getValueAt(linhaSelecionada, 0);
+        int id = ((Number) val).intValue();               
+        ConsultaDao dao = new ConsultaDao();
+        Consulta consulta = dao.buscar(id);               
+        AgendarConsultaJD cadastro = new AgendarConsultaJD(consulta);
+        cadastro.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Selecione um paciente para editar.");
+    }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+      int linhaSelecionada = Tabela.getSelectedRow();
+if (linhaSelecionada >= 0) {
+    Object val = Tabela.getValueAt(linhaSelecionada, 0); 
+    Long id = ((Number) val).longValue();               
+
+    int confirm = JOptionPane.showConfirmDialog(this,
+            "Deseja realmente remover esta consulta?",
+            "Confirmar remoção",
+            JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        ConsultaDao dao = new ConsultaDao();
+        dao.remover(id); 
+        loadTabela(); 
+        JOptionPane.showMessageDialog(this, "Consulta removida com sucesso!");
+    }
+} else {
+    JOptionPane.showMessageDialog(this, "Selecione uma consulta para remover.");
+}
+    }//GEN-LAST:event_btnRemoverActionPerformed
+private void loadTabela() {
+        ConsultaDao dao = new ConsultaDao();
+        List<Consulta> lista = dao.listar();
+
+        DefaultTableModel modelo = (DefaultTableModel) Tabela.getModel();
+        modelo.setRowCount(0);
+for (Consulta c : lista) {
+    System.out.println("Consulta: " + c.getId() + " Profissional: " + c.getProfissional());
+}
+       for (Consulta c : lista) {
+    modelo.addRow(new Object[]{
+        c.getId(), 
+        c.getPaciente().getNome(),
+        c.getProfissional().getNome() + " (" + c.getProfissional().getEspecialidade() + ")",
+        c.getData(),
+        c.getHora()
+    });
+
+
+        }
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> new VisualizarConsulta().setVisible(true));
+    }
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VisualizarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VisualizarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VisualizarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VisualizarConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VisualizarConsulta().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Tabela;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnRemover;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

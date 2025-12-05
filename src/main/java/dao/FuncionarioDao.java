@@ -2,14 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model.dao;
+package dao;
 
-import model.Consulta;
+import model.Funcionario;
 
 /**
  *
  * @author Raissa
  */
-public class ConsultaDao extends GenericDao<Consulta> {
-    public ConsultaDao() { super(Consulta.class); }
+public class FuncionarioDao extends GenericDao<Funcionario>{
+     public FuncionarioDao() 
+     { 
+         super(Funcionario.class); 
+     }
 }

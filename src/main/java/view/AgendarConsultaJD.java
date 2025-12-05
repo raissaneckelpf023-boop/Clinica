@@ -8,15 +8,90 @@ package view;
  *
  * @author Raissa
  */
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import model.Paciente;
+import model.Profissional;
+import dao.PacienteDao;
+import dao.ProfissionalDao;
+import dao.ConsultaDao;
+import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+import model.Consulta;
+import model.Especialidade;
+
+
 public class AgendarConsultaJD extends javax.swing.JFrame {
 
     /**
      * Creates new form AgendarConsultaJD
      */
+    
+   
+   private final PacienteDao pacienteDao = new PacienteDao();
+    private final ProfissionalDao profissionalDao = new ProfissionalDao();
+    private final ConsultaDao consultaDao = new ConsultaDao();
+
+
     public AgendarConsultaJD() {
         initComponents();
+        carregarPacientes();
+        carregarEspecialidades();
+    }
+    
+    private void carregarEspecialidades() {
+    DefaultComboBoxModel<Especialidade> model = new DefaultComboBoxModel<>();
+
+    for (Especialidade e : Especialidade.values()) {
+        model.addElement(e);
     }
 
+    comboEspecialidade.setModel(model);
+}
+
+
+    private void carregarPacientes() {
+        List<Paciente> pacientes = pacienteDao.listar();
+
+    DefaultComboBoxModel<Paciente> model = new DefaultComboBoxModel<>();
+
+    for (Paciente p : pacientes) {
+        model.addElement(p);
+    }
+
+    comboPaciente.setModel(model);
+
+    comboPaciente.addActionListener(e -> {
+        Paciente selecionado = (Paciente) comboPaciente.getSelectedItem();
+        if (selecionado != null) {
+            txtCpf.setText(selecionado.getCpf());
+        } else {
+            txtCpf.setText("");
+        }
+    });
+    }
+
+    
+    private void atualizarProfissionais() {
+      Especialidade especialidade = (Especialidade) comboEspecialidade.getSelectedItem();
+
+    if (especialidade == null) {
+        comboProfissional.setModel(new DefaultComboBoxModel<>());
+        return;
+    }
+
+    List<Profissional> profs = profissionalDao.listar();
+
+    DefaultComboBoxModel<Profissional> model = new DefaultComboBoxModel<>();
+    for (Profissional p : profs) {
+        model.addElement(p);
+    }
+
+    comboProfissional.setModel(model);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,21 +101,199 @@ public class AgendarConsultaJD extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jToggleButton1 = new javax.swing.JToggleButton();
+        lbNome = new javax.swing.JLabel();
+        lbCpf = new javax.swing.JLabel();
+        txtProfissional = new javax.swing.JLabel();
+        lbData = new javax.swing.JLabel();
+        txtData = new javax.swing.JTextField();
+        lbHorario = new javax.swing.JLabel();
+        txtHorario = new javax.swing.JTextField();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        comboEspecialidade = new javax.swing.JComboBox<>();
+        comboPaciente = new JComboBox<Paciente>()
+        ;
+        comboProfissional = new JComboBox<Profissional>()
+        ;
+        jLabel1 = new javax.swing.JLabel();
+        txtCpf = new javax.swing.JTextField();
+
+        jToggleButton1.setText("jToggleButton1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        lbNome.setText("Nome:");
+
+        lbCpf.setText("CPF");
+
+        txtProfissional.setText("Prossifional Saude");
+
+        lbData.setText("Data");
+
+        txtData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDataActionPerformed(evt);
+            }
+        });
+
+        lbHorario.setText("Horario");
+
+        txtHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHorarioActionPerformed(evt);
+            }
+        });
+
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        comboEspecialidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboEspecialidadeActionPerformed(evt);
+            }
+        });
+
+        comboProfissional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboProfissionalActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("especialidade");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbHorario)
+                    .addComponent(lbData))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalvar)
+                        .addGap(39, 39, 39)
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(116, 116, 116)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbCpf)
+                            .addComponent(lbNome))
+                        .addGap(59, 59, 59))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtProfissional)
+                            .addComponent(jLabel1))
+                        .addGap(22, 22, 22)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboProfissional, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(comboEspecialidade, 0, 168, Short.MAX_VALUE)
+                        .addComponent(comboPaciente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCpf))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbNome)
+                    .addComponent(comboPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbCpf)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(comboEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboProfissional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProfissional))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbData))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbHorario))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnCancelar))
+                .addGap(28, 28, 28))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+       try {
+            Paciente paciente = (Paciente) comboPaciente.getSelectedItem();
+            Profissional profissional = (Profissional) comboProfissional.getSelectedItem();
+            
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate data = LocalDate.parse(txtData.getText(), formatter);
+            LocalTime horario = LocalTime.parse(txtHorario.getText());
+
+
+            Consulta c = new Consulta();
+            c.setPaciente(paciente);
+            c.setProfissional(profissional);
+            c.setData(data);
+            c.setHora(horario);
+            
+            consultaDao.salvar(c);
+            JOptionPane.showMessageDialog(this, "Consulta agendada com sucesso!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void comboEspecialidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEspecialidadeActionPerformed
+        atualizarProfissionais();  
+    }//GEN-LAST:event_comboEspecialidadeActionPerformed
+
+    private void comboProfissionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProfissionalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboProfissionalActionPerformed
+
+    private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataActionPerformed
+
+    private void txtHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHorarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHorarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +331,20 @@ public class AgendarConsultaJD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<Especialidade> comboEspecialidade;
+    private javax.swing.JComboBox<Paciente> comboPaciente;
+    private javax.swing.JComboBox<Profissional> comboProfissional;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel lbCpf;
+    private javax.swing.JLabel lbData;
+    private javax.swing.JLabel lbHorario;
+    private javax.swing.JLabel lbNome;
+    private javax.swing.JTextField txtCpf;
+    private javax.swing.JTextField txtData;
+    private javax.swing.JTextField txtHorario;
+    private javax.swing.JLabel txtProfissional;
     // End of variables declaration//GEN-END:variables
 }

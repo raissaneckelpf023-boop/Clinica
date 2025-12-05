@@ -17,8 +17,9 @@ public class Profissional extends Pessoa{
      @Column(nullable = false, unique = true)
     protected String registro;
 
-    protected String especialidade;
-
+   @Enumerated(EnumType.STRING)
+@Column(nullable = false)
+private Especialidade especialidade;
     public String getRegistro() {
         return registro;
     }
@@ -27,17 +28,17 @@ public class Profissional extends Pessoa{
         this.registro = registro;
     }
 
-    public String getEspecialidade() {
+      public Especialidade getEspecialidade() {
         return especialidade;
     }
 
-    public void setEspecialidade(String especialidade) {
+    public void setEspecialidade(Especialidade especialidade) {
         this.especialidade = especialidade;
     }
-    
     @Override
     public String toString() {
-        return "Profissional{" + "id=" + id + ", nome='" + nome + '\'' + ", registro='" + registro + '\'' + '}';
+        return nome;
     }
+
 
 }

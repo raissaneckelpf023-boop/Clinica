@@ -24,7 +24,13 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnPaciente" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnProfissional" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnConsulta" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -35,6 +41,15 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
           </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+              <Component id="btnPaciente" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="btnProfissional" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnConsulta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -44,47 +59,85 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btnVisualizarPaciente" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+              </Group>
               <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnPaciente" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnProfissional" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnConsulta" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnVisualizarProfissional" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnVisualizarConsultas" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="79" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                  <Component id="btnPaciente" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnProfissional" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnConsulta" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="146" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="btnVisualizarPaciente" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnVisualizarProfissional" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnVisualizarConsultas" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="158" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btnPaciente">
+        <Component class="javax.swing.JButton" name="btnVisualizarPaciente">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cadastrar Paciente"/>
+            <Property name="text" type="java.lang.String" value="Visualizar Paciente"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarPacienteActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnProfissional">
+        <Component class="javax.swing.JButton" name="btnVisualizarProfissional">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cadastrar Profissional da Sa&#xfa;de"/>
+            <Property name="text" type="java.lang.String" value="Visualizar Profissional"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarProfissionalActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnConsulta">
+        <Component class="javax.swing.JButton" name="btnVisualizarConsultas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Agendar Consulta"/>
+            <Property name="text" type="java.lang.String" value="Visualizar Consulta"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarConsultasActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnPaciente">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cadastrar Paciente"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPacienteActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnProfissional">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cadastrar Profissional da Sa&#xfa;de"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProfissionalActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnConsulta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Agendar Consulta"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultaActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

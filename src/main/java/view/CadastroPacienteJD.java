@@ -6,7 +6,11 @@ package view;
 
 import javax.swing.JOptionPane;
 import model.Paciente;
-import model.dao.PacienteDao;
+import dao.PacienteDao;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  *
@@ -17,8 +21,41 @@ public class CadastroPacienteJD extends javax.swing.JFrame {
     /**
      * Creates new form CadastroPacienteJD
      */
+   private Paciente pacienteAtual;
+
     public CadastroPacienteJD() {
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+
+    public CadastroPacienteJD(Paciente paciente) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.pacienteAtual = paciente;
+
+        // Preencher campos se paciente não for nulo
+        if (paciente != null) {
+            lbNome.setText(paciente.getNome());
+            lbCpf.setText(paciente.getCpf());
+            lbEmail.setText(paciente.getEmail());
+            lbTelefone.setText(paciente.getTelefone());
+            lbPlanoSaude.setText(paciente.getPlanoSaude());
+            if (paciente.getDataNascimento() != null) {
+                txtDtnascimento.setText(paciente.getDataNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            }
+        }
+    }
+
+    // Método seguro para converter data
+    private LocalDate parseData(String dataTexto) {
+        if (dataTexto == null || dataTexto.isBlank()) return null;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(dataTexto.trim(), dtf);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Data inválida! Use o formato dd/MM/yyyy.");
+            return null;
+        }
     }
 
     /**
@@ -31,36 +68,39 @@ public class CadastroPacienteJD extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtNome = new javax.swing.JLabel();
-        txtCpf = new javax.swing.JLabel();
-        txtTelefone = new javax.swing.JLabel();
-        txtPlanoSaude = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        lbNome = new javax.swing.JLabel();
+        lbCpf = new javax.swing.JLabel();
+        lbTelefone = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        txtCpf = new javax.swing.JTextField();
+        txtTelefone = new javax.swing.JTextField();
+        txtPlanoSaude = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        lbPlanoSaude = new javax.swing.JLabel();
+        lbEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        btnEditar = new javax.swing.JButton();
+        txtDtnascimento = new javax.swing.JTextField();
+        lbdataNascimento = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        txtNome.setText("Nome");
+        lbNome.setText("Nome");
 
-        txtCpf.setText("CPF");
+        lbCpf.setText("CPF");
 
-        txtTelefone.setText("Telefone");
+        lbTelefone.setText("Telefone");
 
-        txtPlanoSaude.setText("Plano Saude");
-
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtTelefoneActionPerformed(evt);
             }
         });
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtPlanoSaude.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtPlanoSaudeActionPerformed(evt);
             }
         });
 
@@ -72,104 +112,188 @@ public class CadastroPacienteJD extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        lbPlanoSaude.setText("Plano Saude");
+
+        lbEmail.setText("Email");
+
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        txtDtnascimento.setText("Data Nascimento");
+
+        lbdataNascimento.setText("data de nascimento");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNome)
-                                    .addComponent(txtCpf))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtTelefone)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtPlanoSaude)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4)))
-                .addContainerGap(83, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnSalvar)
-                .addGap(31, 31, 31)
-                .addComponent(btnCancelar)
-                .addGap(119, 119, 119))
+                        .addComponent(btnSalvar)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lbNome)
+                            .addGap(30, 30, 30)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(lbTelefone)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lbCpf)
+                            .addGap(42, 42, 42)
+                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lbPlanoSaude)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtPlanoSaude, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lbEmail)
+                            .addGap(42, 42, 42)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lbdataNascimento)
+                            .addGap(51, 51, 51)
+                            .addComponent(txtDtnascimento))))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNome)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCpf)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTelefone)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbNome)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPlanoSaude)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                    .addComponent(lbCpf)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTelefone))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPlanoSaude)
+                    .addComponent(txtPlanoSaude, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbEmail)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDtnascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbdataNascimento))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(btnCancelar))
-                .addGap(22, 22, 22))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnEditar))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-         Paciente p = new Paciente();
-    p.setNome(txtNome.getText());
-    p.setCpf(txtCpf.getText());
-    p.setTelefone(txtTelefone.getText());
-    p.setPlanoSaude(txtPlanoSaude.getText());
+         try {
+            if (pacienteAtual != null) {
+                // Edição
+                pacienteAtual.setNome(lbNome.getText());
+                pacienteAtual.setCpf(lbCpf.getText());
+                pacienteAtual.setEmail(lbEmail.getText());
+                pacienteAtual.setTelefone(lbTelefone.getText());
+                pacienteAtual.setPlanoSaude(lbPlanoSaude.getText());
 
-    PacienteDao dao = new PacienteDao();
-    dao.salvar(p);
+                LocalDate dataNascimento = parseData(txtDtnascimento.getText());
+                if (dataNascimento == null) return;
+                pacienteAtual.setDataNascimento(dataNascimento);
 
-    JOptionPane.showMessageDialog(this, "Paciente salvo!");
-    dispose();
+                PacienteDao dao = new PacienteDao();
+                dao.salvar(pacienteAtual);
+                JOptionPane.showMessageDialog(this, "Paciente atualizado com sucesso!");
+            } else {
+                // Novo paciente
+                Paciente paciente = new Paciente();
+                paciente.setNome(txtNome.getText());
+                paciente.setCpf(txtCpf.getText());
+                paciente.setEmail(txtEmail.getText());
+                paciente.setTelefone(txtTelefone.getText());
+                paciente.setPlanoSaude(txtPlanoSaude.getText());
+
+                LocalDate dataNascimento = parseData(txtDtnascimento.getText());
+                if (dataNascimento == null) return;
+                paciente.setDataNascimento(dataNascimento);
+
+                PacienteDao dao = new PacienteDao();
+                dao.salvar(paciente);
+                JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!");
+            }
+
+            this.dispose(); // Fecha a janela
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar paciente: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtPlanoSaudeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlanoSaudeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtPlanoSaudeActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtTelefoneActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,15 +332,20 @@ public class CadastroPacienteJD extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JLabel txtCpf;
-    private javax.swing.JLabel txtNome;
-    private javax.swing.JLabel txtPlanoSaude;
-    private javax.swing.JLabel txtTelefone;
+    private javax.swing.JLabel lbCpf;
+    private javax.swing.JLabel lbEmail;
+    private javax.swing.JLabel lbNome;
+    private javax.swing.JLabel lbPlanoSaude;
+    private javax.swing.JLabel lbTelefone;
+    private javax.swing.JLabel lbdataNascimento;
+    private javax.swing.JTextField txtCpf;
+    private javax.swing.JTextField txtDtnascimento;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtPlanoSaude;
+    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }

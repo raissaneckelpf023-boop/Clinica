@@ -27,47 +27,95 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btnVisualizarPaciente = new javax.swing.JButton();
+        btnVisualizarProfissional = new javax.swing.JButton();
+        btnVisualizarConsultas = new javax.swing.JButton();
         btnPaciente = new javax.swing.JButton();
         btnProfissional = new javax.swing.JButton();
         btnConsulta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnPaciente.setText("Cadastrar Paciente");
+        btnVisualizarPaciente.setText("Visualizar Paciente");
+        btnVisualizarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarPacienteActionPerformed(evt);
+            }
+        });
 
-        btnProfissional.setText("Cadastrar Profissional da Saúde");
+        btnVisualizarProfissional.setText("Visualizar Profissional");
+        btnVisualizarProfissional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarProfissionalActionPerformed(evt);
+            }
+        });
 
-        btnConsulta.setText("Agendar Consulta");
+        btnVisualizarConsultas.setText("Visualizar Consulta");
+        btnVisualizarConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarConsultasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVisualizarPaciente)
+                .addGap(45, 45, 45))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPaciente)
-                    .addComponent(btnProfissional)
-                    .addComponent(btnConsulta))
-                .addGap(0, 79, Short.MAX_VALUE))
+                    .addComponent(btnVisualizarProfissional)
+                    .addComponent(btnVisualizarConsultas))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(67, 67, 67)
-                .addComponent(btnPaciente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnProfissional)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsulta)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(btnVisualizarPaciente)
+                .addGap(18, 18, 18)
+                .addComponent(btnVisualizarProfissional)
+                .addGap(18, 18, 18)
+                .addComponent(btnVisualizarConsultas)
+                .addContainerGap(158, Short.MAX_VALUE))
         );
+
+        btnPaciente.setText("Cadastrar Paciente");
+        btnPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPacienteActionPerformed(evt);
+            }
+        });
+
+        btnProfissional.setText("Cadastrar Profissional da Saúde");
+        btnProfissional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProfissionalActionPerformed(evt);
+            }
+        });
+
+        btnConsulta.setText("Agendar Consulta");
+        btnConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(126, 126, 126)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPaciente)
+                    .addComponent(btnProfissional)
+                    .addComponent(btnConsulta))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -75,56 +123,57 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(btnPaciente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnProfissional)
+                .addGap(18, 18, 18)
+                .addComponent(btnConsulta)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
+        new CadastroPacienteJD().setVisible(true);
+    }//GEN-LAST:event_btnPacienteActionPerformed
+
+    private void btnProfissionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfissionalActionPerformed
+       new CadastroProfissional().setVisible(true);
+    }//GEN-LAST:event_btnProfissionalActionPerformed
+
+    private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
+    new AgendarConsultaJD().setVisible(true);
+
+    }//GEN-LAST:event_btnConsultaActionPerformed
+
+    private void btnVisualizarConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarConsultasActionPerformed
+        VisualizarConsulta tela = new VisualizarConsulta(); 
+    tela.setVisible(true); 
+    tela.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVisualizarConsultasActionPerformed
+
+    private void btnVisualizarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarPacienteActionPerformed
+        VisualizarPaciente telaPaciente = new VisualizarPaciente(); // construtor sem argumento
+    telaPaciente.setVisible(true);
+    telaPaciente.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVisualizarPacienteActionPerformed
+
+    private void btnVisualizarProfissionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarProfissionalActionPerformed
+         VisualizarProfissional telaProfissional = new VisualizarProfissional(); // construtor sem argumento
+    telaProfissional.setVisible(true);
+    telaProfissional.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVisualizarProfissionalActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
-    private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {
-    new CadastroPacienteJD().setVisible(true);
-}
-
-private void btnProfissionalActionPerformed(java.awt.event.ActionEvent evt) {
-    new CadastroProfissional().setVisible(true);
-}
-
-private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {
-    new AgendarConsultaJD().setVisible(true);
-}
-
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Principal().setVisible(true);
         });
     }
 
@@ -132,6 +181,9 @@ private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JButton btnConsulta;
     private javax.swing.JButton btnPaciente;
     private javax.swing.JButton btnProfissional;
+    private javax.swing.JButton btnVisualizarConsultas;
+    private javax.swing.JButton btnVisualizarPaciente;
+    private javax.swing.JButton btnVisualizarProfissional;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

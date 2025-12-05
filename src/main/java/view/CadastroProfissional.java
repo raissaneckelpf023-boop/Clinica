@@ -4,6 +4,11 @@
  */
 package view;
 
+import dao.ProfissionalDao;
+import javax.swing.JOptionPane;
+import model.Especialidade;
+import model.Profissional;
+
 /**
  *
  * @author Raissa
@@ -15,7 +20,23 @@ public class CadastroProfissional extends javax.swing.JFrame {
      */
     public CadastroProfissional() {
         initComponents();
+         
+      cbEspecialidade.setModel(
+    new javax.swing.DefaultComboBoxModel<>(Especialidade.values())
+);
+
     }
+    
+    private Profissional profissionalAtual;
+
+public CadastroProfissional(Profissional profissional) {
+    initComponents();
+    this.profissionalAtual = profissional;
+
+    lbNome.setText(profissional.getNome());
+    lbRegistro.setText(profissional.getRegistro());
+    cbEspecialidade.setSelectedItem(profissional.getEspecialidade());
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,21 +47,145 @@ public class CadastroProfissional extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        lbNome = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        lbRegistro = new javax.swing.JLabel();
+        txtRegistro = new javax.swing.JTextField();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        cbEspecialidade = new javax.swing.JComboBox<>();
+        lbEspecialidade = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        lbNome.setText("Nome:");
+
+        lbRegistro.setText("Registro: ");
+
+        txtRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRegistroActionPerformed(evt);
+            }
+        });
+
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+
+        cbEspecialidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEspecialidadeActionPerformed(evt);
+            }
+        });
+
+        lbEspecialidade.setText("Especialidade");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSalvar)
+                        .addGap(71, 71, 71)
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbRegistro)
+                                .addComponent(lbEspecialidade))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(cbEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lbNome)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(81, 81, 81))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(107, 107, 107)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbRegistro)
+                    .addComponent(txtRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbEspecialidade))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnSalvar))
+                .addGap(37, 37, 37))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRegistroActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+      try {
+        ProfissionalDao dao = new ProfissionalDao();
+
+        
+        if (profissionalAtual != null) {
+            profissionalAtual.setNome(lbNome.getText());
+            profissionalAtual.setRegistro(lbRegistro.getText());
+            
+           
+            Especialidade esp = (Especialidade) cbEspecialidade.getSelectedItem();
+            profissionalAtual.setEspecialidade(esp);
+
+            
+            dao.salvar(profissionalAtual);
+            JOptionPane.showMessageDialog(this, "Profissional atualizado com sucesso!");
+
+        } else { // Novo profissional
+            Profissional profissional = new Profissional();
+            profissional.setNome(txtNome.getText());
+            profissional.setRegistro(txtRegistro.getText());
+            
+            // Seleciona a especialidade do comboBox
+            Especialidade esp = (Especialidade) cbEspecialidade.getSelectedItem();
+            profissional.setEspecialidade(esp);
+
+            // Salvar no banco
+            dao.salvar(profissional);
+            JOptionPane.showMessageDialog(this, "Profissional cadastrado com sucesso!");
+        }
+
+        // Fechar a janela após salvar
+        this.dispose();
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Erro ao salvar profissional: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void cbEspecialidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEspecialidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbEspecialidadeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +223,14 @@ public class CadastroProfissional extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<model.Especialidade> cbEspecialidade;
+    private javax.swing.JLabel lbEspecialidade;
+    private javax.swing.JLabel lbNome;
+    private javax.swing.JLabel lbRegistro;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtRegistro;
     // End of variables declaration//GEN-END:variables
 }
